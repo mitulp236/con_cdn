@@ -1,0 +1,31 @@
+body
+{
+    background: url("../images/bg/bg12.jpg");
+    background-repeat: :no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
+}
+.page-header
+{
+    border-bottom: none;
+}
+h1
+{
+
+    color: white;
+    text-shadow: 2px 2px 5px black;
+   /* width:50%;
+    text-align: center;*/
+    margin: 20px auto;
+
+    
+}
+@media only screen and (max-width: 530px)
+{
+	
+	body{
+        background-position: left;
+        
+	}
+}
