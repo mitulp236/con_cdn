@@ -1,0 +1,3 @@
+Montserrat Font family & galada
+Banner gradiant bg color : #0071bc & #0503a1
+Blue for button & footer : #0071bc
