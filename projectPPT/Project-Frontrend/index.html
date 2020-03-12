@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/loader.css" type="text/css">
+    <link rel="stylesheet" href="css/custom.css" type="text/css">
+    <title>Fleet Manager Console</title>
+
+</head>
+<body>
+    <div class="container-fluid ">
+
+        <div class="login_section mt-5">
+            <form class="form-inline" name="login_form" id="login_form"  method="POST">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Enter email" name="email" id="email" />
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Enter password" name="password" id="password" />
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-primary" value="Login" />
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    
+        <h1 id="loader"></h1>
+        <!-- spinner / Loader -->
+        <div class="spinner" id="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+        <div class="" style="margin-top:10%;" id="add_main_containt"></div>
+
+    </div>
+    <!-- script area ! do not touch ! please -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            spinner = document.getElementById('spinner');
+            spinner.style.display = 'none';
+
+            $('#login_form').on('submit',function(event){
+                event.preventDefault();
+                document.getElementById('add_main_containt').style.opacity = '0.5';
+                spinner.style.display = 'block';
+
+                var login_data = {
+                    email : $('#email').val(),
+                    password : $('#password').val(),
+                }
+               
+                $.ajax({
+                    data : JSON.stringify(login_data),
+                    type : 'POST',
+                    url : 'http://localhost:8080/fleet-manager-api/rest/user/login',
+                    contentType: "application/json",
+                    success: function( data ) {
+                        spinner.style.display = 'none';
+                        document.getElementById('add_main_containt').style.opacity = '1';
+                        swal(data.email)
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        spinner.style.display = 'none';
+                        document.getElementById('add_main_containt').style.opacity = '1';
+                        if(xhr.status==401) {
+                            swal(xhr.responseJSON.message);
+                        }else{
+                            swal("Something Was Wrong ! Please try again ! ");
+                        }
+                    }
+                });
+
+            });
+        });
+    </script>
+</body>
+
+</html>
